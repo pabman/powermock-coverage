@@ -29,7 +29,7 @@ public class ClassATestWithRule {
     }
     
     @Test
-    public void testDoSomethingWithoutMock() {
+    public void testDoSomething1() {
     	when(mockClassB.getSomething()).thenReturn("The actual something");
         
     	String something = classA.doSomething();
@@ -38,7 +38,7 @@ public class ClassATestWithRule {
     }
 
     @Test
-    public void testDoSomethingWithMock() throws Exception {
+    public void testDoSomething2() throws Exception {
         when(mockClassB.getSomething()).thenReturn("Something else");
 
         String something = classA.doSomething();
