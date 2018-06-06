@@ -1,5 +1,6 @@
 package mocktest;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -22,15 +23,22 @@ public class ClassATestWithRule {
     @Mock
     private ClassB mockClassB;
 
+    @Before
+    public void setup() throws Exception {
+    	PowerMockito.whenNew(ClassB.class).withNoArguments().thenReturn(mockClassB);
+    }
+    
     @Test
     public void testDoSomethingWithoutMock() {
-        String something = classA.doSomething();
-        assertThat(something, is("The actual something"));
+    	when(mockClassB.getSomething()).thenReturn("The actual something");
+        
+    	String something = classA.doSomething();
+        
+    	assertThat(something, is("The actual something"));
     }
 
     @Test
     public void testDoSomethingWithMock() throws Exception {
-        PowerMockito.whenNew(ClassB.class).withNoArguments().thenReturn(mockClassB);
         when(mockClassB.getSomething()).thenReturn("Something else");
 
         String something = classA.doSomething();
